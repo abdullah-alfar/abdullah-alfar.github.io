@@ -1,169 +1,514 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="no-js">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PHP Developer Portfolio</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f4f4f4;
-        }
-        .header {
-            background-color: #333;
-            color: #fff;
-            padding: 1rem 0;
-            text-align: center;
-        }
-        .container {
-            padding: 2rem;
-        }
-        .section {
-            margin-bottom: 2rem;
-        }
-        .section h2 {
-            border-bottom: 2px solid #333;
-            padding-bottom: 0.5rem;
-        }
-        .projects, .skills, .contact {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 1rem;
-        }
-        .project, .skill, .contact-info {
-            background-color: #fff;
-            padding: 1rem;
-            border-radius: 5px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            flex: 1 1 calc(33% - 2rem);
-        }
-        .project img {
-            width: 100%;
-            height: auto;
-        }
-        .footer {
-            text-align: center;
-            padding: 1rem 0;
-            background-color: #333;
-            color: #fff;
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Abdullah Alfar — Senior Backend Engineer (PHP/Laravel)</title>
+  <meta name="description" content="Abdullah Alfar — Senior Backend Engineer & Team Lead. PHP, Laravel, Symfony, APIs, CI/CD, performance optimization."/>
+  <meta name="theme-color" content="#0b1220"/>
+
+  <style>
+    :root{
+      --bg: #0b1220;
+      --surface: rgba(255,255,255,.06);
+      --surface2: rgba(255,255,255,.09);
+      --text: rgba(255,255,255,.92);
+      --muted: rgba(255,255,255,.68);
+      --border: rgba(255,255,255,.14);
+      --accent: #7c3aed;
+      --accent2:#22c55e;
+      --shadow: 0 18px 50px rgba(0,0,0,.35);
+      --radius: 18px;
+      --max: 1080px;
+    }
+
+    /* light mode */
+    [data-theme="light"]{
+      --bg: #f6f7fb;
+      --surface: rgba(15,23,42,.05);
+      --surface2: rgba(15,23,42,.08);
+      --text: rgba(15,23,42,.92);
+      --muted: rgba(15,23,42,.68);
+      --border: rgba(15,23,42,.14);
+      --accent: #6d28d9;
+      --accent2:#16a34a;
+      --shadow: 0 18px 50px rgba(2,6,23,.12);
+    }
+
+    *{ box-sizing:border-box; }
+    html,body{ height:100%; }
+    body{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+      background:
+        radial-gradient(900px 500px at 15% 10%, rgba(124,58,237,.28), transparent 50%),
+        radial-gradient(900px 500px at 85% 20%, rgba(34,197,94,.22), transparent 55%),
+        radial-gradient(900px 500px at 50% 95%, rgba(59,130,246,.18), transparent 55%),
+        var(--bg);
+      color: var(--text);
+      line-height:1.6;
+    }
+
+    a{ color:inherit; text-decoration:none; }
+    a:hover{ text-decoration:underline; }
+
+    .wrap{ max-width: var(--max); margin: 0 auto; padding: 28px 18px 60px; }
+
+    /* Top nav */
+    .topbar{
+      display:flex; align-items:center; justify-content:space-between;
+      gap:12px;
+      position: sticky; top: 0;
+      padding: 14px 0;
+      backdrop-filter: blur(10px);
+      z-index: 10;
+    }
+    .brand{
+      display:flex; align-items:center; gap:10px;
+      padding: 10px 12px;
+      border-radius: 999px;
+      background: linear-gradient(180deg, var(--surface2), var(--surface));
+      border:1px solid var(--border);
+      box-shadow: var(--shadow);
+    }
+    .dot{
+      width:10px; height:10px; border-radius:50%;
+      background: var(--accent);
+      box-shadow: 0 0 0 5px rgba(124,58,237,.18);
+    }
+    .brand strong{ font-size:14px; letter-spacing:.2px; }
+    .brand span{ font-size:12px; color: var(--muted); display:block; margin-top:2px; }
+
+    .nav{
+      display:flex; align-items:center; gap:10px; flex-wrap:wrap;
+      justify-content:flex-end;
+    }
+
+    .btn{
+      display:inline-flex; align-items:center; justify-content:center;
+      gap:8px;
+      padding: 10px 12px;
+      border-radius: 999px;
+      border:1px solid var(--border);
+      background: linear-gradient(180deg, var(--surface2), var(--surface));
+      color: var(--text);
+      box-shadow: 0 10px 25px rgba(0,0,0,.12);
+      font-size: 13px;
+      cursor:pointer;
+      user-select:none;
+      white-space:nowrap;
+    }
+    .btn:hover{ filter: brightness(1.05); text-decoration:none; }
+    .btn.primary{
+      background: linear-gradient(180deg, rgba(124,58,237,.95), rgba(124,58,237,.70));
+      border-color: rgba(124,58,237,.55);
+    }
+    .btn.ghost{
+      background: transparent;
+      border: 1px solid var(--border);
+      box-shadow:none;
+    }
+
+    /* Hero */
+    .hero{
+      margin-top: 10px;
+      border-radius: var(--radius);
+      border:1px solid var(--border);
+      background: linear-gradient(180deg, var(--surface2), var(--surface));
+      box-shadow: var(--shadow);
+      overflow:hidden;
+      position:relative;
+    }
+    .hero-inner{
+      padding: 26px 22px;
+      display:grid;
+      grid-template-columns: 1.35fr .65fr;
+      gap: 18px;
+      align-items:start;
+    }
+    .kicker{
+      display:inline-flex; gap:8px; align-items:center;
+      font-size: 12px;
+      color: var(--muted);
+      padding: 6px 10px;
+      border:1px solid var(--border);
+      border-radius: 999px;
+      background: rgba(255,255,255,.04);
+      width: fit-content;
+    }
+    .badge{
+      width:8px; height:8px; border-radius:50%;
+      background: var(--accent2);
+      box-shadow: 0 0 0 4px rgba(34,197,94,.16);
+    }
+    h1{ margin: 10px 0 8px; line-height:1.18; font-size: clamp(26px, 4vw, 38px); }
+    .subtitle{ margin:0; color: var(--muted); font-size: 14px; max-width: 62ch; }
+    .hero-cta{ margin-top: 14px; display:flex; flex-wrap:wrap; gap:10px; }
+
+    .hero-card{
+      border-radius: 16px;
+      border:1px solid var(--border);
+      background: rgba(255,255,255,.04);
+      padding: 14px;
+    }
+    .hero-card h3{ margin:0 0 8px; font-size: 14px; }
+    .meta{
+      display:grid; gap:8px;
+      font-size: 13px;
+      color: var(--muted);
+    }
+    .meta a{ color: var(--text); }
+    .pill-row{
+      display:flex; flex-wrap:wrap; gap:8px; margin-top: 10px;
+    }
+    .pill{
+      font-size: 12px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      border:1px solid var(--border);
+      background: rgba(255,255,255,.04);
+      color: var(--muted);
+    }
+
+    /* Sections */
+    .grid{
+      margin-top: 18px;
+      display:grid;
+      grid-template-columns: 1fr;
+      gap: 14px;
+    }
+    .section{
+      border-radius: var(--radius);
+      border:1px solid var(--border);
+      background: linear-gradient(180deg, var(--surface2), var(--surface));
+      box-shadow: var(--shadow);
+      padding: 18px 18px;
+    }
+    .section-head{
+      display:flex; align-items:flex-end; justify-content:space-between;
+      gap:12px; flex-wrap:wrap;
+      margin-bottom: 12px;
+    }
+    .section h2{
+      margin: 0;
+      font-size: 16px;
+      letter-spacing: .2px;
+    }
+    .section small{ color: var(--muted); }
+
+    .cards{
+      display:grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 12px;
+    }
+    .card{
+      grid-column: span 12;
+      border-radius: 16px;
+      border:1px solid var(--border);
+      background: rgba(255,255,255,.04);
+      padding: 14px;
+    }
+    .card h3{
+      margin:0 0 6px;
+      font-size: 14px;
+    }
+    .card p{ margin: 0; color: var(--muted); font-size: 13px; }
+    .card .actions{ margin-top: 10px; display:flex; gap:10px; flex-wrap:wrap; }
+
+    .list{
+      margin: 10px 0 0;
+      padding-left: 18px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+    .list li{ margin: 6px 0; }
+
+    /* Columns for larger screens */
+    @media (min-width: 860px){
+      .grid{ grid-template-columns: 1.15fr .85fr; align-items:start; }
+      .hero-inner{ grid-template-columns: 1.35fr .65fr; }
+      .card{ grid-column: span 6; }
+      .card.wide{ grid-column: span 12; }
+    }
+
+    /* Footer */
+    footer{
+      margin-top: 18px;
+      color: var(--muted);
+      text-align:center;
+      font-size: 12px;
+      padding: 18px 0 4px;
+    }
+
+    /* Print */
+    @media print{
+      .topbar, .hero-cta, .btn, .actions{ display:none !important; }
+      body{ background: #fff; color:#000; }
+      .section, .hero{ box-shadow:none; background:#fff; }
+    }
+  </style>
 </head>
+
 <body>
-    <div class="header">
-        <h1>Abdullah Alfar - PHP Developer</h1>
+  <div class="wrap">
+    <div class="topbar">
+      <div class="brand" aria-label="Brand">
+        <div class="dot"></div>
+        <div>
+          <strong>Abdullah Alfar</strong>
+          <span>Senior Backend Engineer • PHP/Laravel/Symfony</span>
+        </div>
+      </div>
+
+      <div class="nav">
+        <a class="btn ghost" href="#projects">Projects</a>
+        <a class="btn ghost" href="#experience">Experience</a>
+        <a class="btn ghost" href="#skills">Skills</a>
+        <a class="btn ghost" href="#contact">Contact</a>
+        <button id="themeBtn" class="btn" type="button" aria-label="Toggle theme">🌙 Theme</button>
+      </div>
     </div>
 
-    <div class="container">
-        <div class="section about">
-            <h2>About Me</h2>
-            <p>A passionate PHP developer with over 8 years of experience in building dynamic and responsive web applications. I have a strong understanding of backend development and a keen eye for detail.</p>
+    <section class="hero">
+      <div class="hero-inner">
+        <div>
+          <div class="kicker"><span class="badge"></span> Available for backend consulting / short projects</div>
+          <h1>Building fast, secure backend systems that scale.</h1>
+          <p class="subtitle">
+            Senior Backend Engineer & Team Lead with <strong>8+ years</strong> in PHP, Laravel, Symfony.
+            I focus on performance, API quality, CI/CD, and modernizing legacy systems.
+          </p>
+
+          <div class="hero-cta">
+            <a class="btn primary" href="#contact">Contact Me</a>
+            <a class="btn" href="https://www.linkedin.com/in/abdullah-alfar-66397686/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+            <a class="btn" href="mailto:abood.elfar@yahoo.com">Email</a>
+            <a class="btn" href="tel:+962795732866">Call</a>
+          </div>
+
+          <div class="pill-row" aria-label="Highlights">
+            <span class="pill">Optimized APIs (−35% response time)</span>
+            <span class="pill">Reduced DB load (−25%)</span>
+            <span class="pill">Led team of 5</span>
+            <span class="pill">CI/CD (Jenkins)</span>
+          </div>
         </div>
 
-        <div class="section projects">
+        <aside class="hero-card" aria-label="Quick info">
+          <h3>Quick Info</h3>
+          <div class="meta">
+            <div>📍 <strong>Amman, Jordan</strong></div>
+            <div>✉️ <a href="mailto:abood.elfar@yahoo.com">abood.elfar@yahoo.com</a></div>
+            <div>📞 <a href="tel:+962795732866">+962 79 573 2866</a></div>
+            <div>🔗 <a href="https://abdullah-alfar.github.io" target="_blank" rel="noopener noreferrer">abdullah-alfar.github.io</a></div>
+            <div>💼 <a href="https://www.linkedin.com/in/abdullah-alfar-66397686/" target="_blank" rel="noopener noreferrer">linkedin.com/in/abdullah-alfar</a></div>
+          </div>
+          <div class="pill-row" style="margin-top:12px">
+            <span class="pill">PHP 7/8</span>
+            <span class="pill">Laravel</span>
+            <span class="pill">Symfony</span>
+            <span class="pill">MySQL</span>
+            <span class="pill">Redis</span>
+            <span class="pill">REST APIs</span>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <div class="grid">
+      <!-- Left column -->
+      <main>
+        <section id="projects" class="section">
+          <div class="section-head">
             <h2>Projects</h2>
-            <div class="project">
-                <h3>Zain IQ</h3>
-               
-                <p>Find the best mobile &amp; data plans for both your personal &amp; business needs here at Zain. Choose from a variety of postpaid plans, prepaid plans &amp; more</p> |
-                <a href="https://www.iq.zain.com/ar" target="_blank">View Project</a>
-            </div>
-            <div class="project">
-                <h3>ecommerce</h3>
-                <p>Specialist in mobile phones, tablets, computers and parts. Our ultimate goal is to bring the best quality products</p> |
-                <a href="https://www.xlineparts.com" target="_blank">View Project</a>
-            </div>
-            <div class="project">
-                <h3>Noor Capital PSC</h3>
-              
-                <p>Finance broker in Dubai, United Arab Emirates</p>
-                <a href="https://noorcapital.ae" target="_blank">View Project</a>
-            </div>
-            <div class="project">
-                <h3>Alumni Portal!</h3>
-           
-                <p> JU graduates have had a broad and significant impact on the region. They embody the values that the schools strive to instill in their students: life-long learning, knowledge creation, initiation of change, responsibility and proactive citizenship which enable them to create a future of their own choice.</p>
-                <a href="https://alumni.ju.edu.jo/en/university/University-of-Jordan/student-login" target="_blank">View Project</a>
-            </div>
-            <div class="project">
-                <h3>Jordanian Judicial Council</h3>
-               
-                <a href="https://jc.jo/ar" target="_blank">View Project</a>
-            </div>
-            <div class="project">
-                <h3>National Employment Platform</h3>
-               
-                <a href="https://sajjil.gov.jo" target="_blank">View Project</a>
-            </div>
-        </div>
-     <hr/>
-        <div class="section skills">
+            <small>Selected work</small>
+          </div>
+
+          <div class="cards">
+            <article class="card">
+              <h3>Zain IQ</h3>
+              <p>Mobile & data plans platform (personal & business).</p>
+              <div class="actions">
+                <a class="btn" href="https://www.iq.zain.com/ar" target="_blank" rel="noopener noreferrer">View</a>
+              </div>
+            </article>
+
+            <article class="card">
+              <h3>Xlineparts (eCommerce)</h3>
+              <p>Online store for phones, tablets, computers and parts.</p>
+              <div class="actions">
+                <a class="btn" href="https://www.xlineparts.com" target="_blank" rel="noopener noreferrer">View</a>
+              </div>
+            </article>
+
+            <article class="card">
+              <h3>Noor Capital PSC</h3>
+              <p>Finance broker website in Dubai, UAE.</p>
+              <div class="actions">
+                <a class="btn" href="https://noorcapital.ae" target="_blank" rel="noopener noreferrer">View</a>
+              </div>
+            </article>
+
+            <article class="card">
+              <h3>Alumni Portal (University of Jordan)</h3>
+              <p>Portal for alumni services and engagement.</p>
+              <div class="actions">
+                <a class="btn" href="https://alumni.ju.edu.jo/en/university/University-of-Jordan/student-login" target="_blank" rel="noopener noreferrer">View</a>
+              </div>
+            </article>
+
+            <article class="card">
+              <h3>Jordanian Judicial Council</h3>
+              <p>Public-facing portal (Arabic).</p>
+              <div class="actions">
+                <a class="btn" href="https://jc.jo/ar" target="_blank" rel="noopener noreferrer">View</a>
+              </div>
+            </article>
+
+            <article class="card">
+              <h3>National Employment Platform (Sajil)</h3>
+              <p>Backend modules for national employment platform.</p>
+              <div class="actions">
+                <a class="btn" href="https://sajjil.gov.jo" target="_blank" rel="noopener noreferrer">View</a>
+              </div>
+            </article>
+          </div>
+        </section>
+
+        <section id="experience" class="section">
+          <div class="section-head">
+            <h2>Experience</h2>
+            <small>What I do day-to-day</small>
+          </div>
+
+          <article class="card wide">
+            <h3>Senior Backend Engineer & Team Lead — Wewebit <span style="color:var(--muted); font-weight:500;">(Mar 2014 — Present)</span></h3>
+            <ul class="list">
+              <li>Engineered 12+ enterprise-grade web applications using Laravel and Symfony.</li>
+              <li>Reduced API response times by 35% and database query load by 25%.</li>
+              <li>Directed a team of 5 developers, delivering projects 20% faster.</li>
+              <li>Designed CI/CD pipelines with Jenkins, reducing release cycles by 40%.</li>
+              <li>Migrated legacy systems to PHP 7/8 to reduce technical debt.</li>
+              <li>Mentored junior developers and improved team productivity by 25%.</li>
+            </ul>
+          </article>
+
+          <article class="card wide">
+            <h3>Technical Support — Adnani Group <span style="color:var(--muted); font-weight:500;">(Jun 2013 — Feb 2014)</span></h3>
+            <ul class="list">
+              <li>Resolved 100+ IT issues monthly, maintaining 99% uptime.</li>
+              <li>Automated internal reports, saving ~20% manual effort.</li>
+              <li>Supported 80+ users and reduced ticket resolution time by 30%.</li>
+            </ul>
+          </article>
+
+          <article class="card wide">
+            <h3>Education</h3>
+            <p>B.Sc. Computer Science — Albalqa Applied University (Jordan)</p>
+          </article>
+        </section>
+      </main>
+
+      <!-- Right column -->
+      <aside>
+        <section id="skills" class="section">
+          <div class="section-head">
             <h2>Skills</h2>
-            <div class="skill">
-                <h3>PHP</h3>
-                <p>Experienced in PHP and various frameworks like Laravel and Symfony.</p>
-            </div>
-            <div class="skill">
-                <h3>MySQL</h3>
-                <p>Proficient in database design and optimization using MySQL.</p>
-            </div>
-            <div class="skill">
-                <h3>JavaScript</h3>
-                <p>Skilled in JavaScript and frontend frameworks like Vue.js and React.</p>
-            </div>
-            <pre>
-                Abdullah Alfar
-                (962) 0795732866
-                abood.elfar@yahoo.com
-                Jordan, Amman
-                Skills :
-                Programming Languages: PHP, SQL, HTML,CSS3 , Javascript , XML, AJAX
-                --------------------------------------------------------------------------------------------------------------------------------------------------------
-                Work Experience
-                Backend developer
-                At Wewebit company from 2014 until now
-                - Around 8 years of extensive experience in web based applications using LAMP, WAMP, PHP, OctoberCMS , Wordpress SEO technologies , and Team leader.
-                - Good working experience in designing and implementing various web applications in both LAMP Linux, Apache, Nginx, MySQL, PHP and WAMP Windows, Apache, MySQL, PHP Environments.
-                - Solid knowledge and Understanding on internet technologies including XML, webservice, JQuery,Vusjs
-                - Experienced in PHP, MySQL, OOPS, Design Patterns, HTML5, CSS
-                - Strong understanding of API driven design with versioning
-                - Excellent experience in designing and developing interactive User
-                - Interfaces, usability, web and client / server applications using HTML5, CSS3, JavaScript and JQuery.
-                - Expertise in client scripting language and server side scripting languages like JavaScript, jQuery, JSON, bootstrap, Vue.js.
-                - Extensive experience on implementing the AJAX features using JavaScript and jQuery.
-                - Relevant experience in web applications using PHP - Symfony2, Laravel, Yii2
-                - Hands on experience on NoSQL Redis/MongoDB databases, tuning, and optimization
-                - strong programming experience in PERL with sufficient exposure to Windows, Linux, Unix OS
-                Technical support
-                At Adnani Group from 2013 To 2014
-                --------------------------------------------------------------------------------------------------------------------------------------------------------
-                Education
-                Bachelor's degree in computer science
-                Albalqa applied university , Jordan
-                </pre>
-        </div>
+            <small>Core stack</small>
+          </div>
 
-        <div class="section contact">
+          <div class="cards">
+            <div class="card">
+              <h3>Backend</h3>
+              <p>PHP, Laravel, Symfony, RESTful APIs, API Integration, Security-focused backend.</p>
+            </div>
+            <div class="card">
+              <h3>Data</h3>
+              <p>MySQL (DDL/DML), NoSQL (Redis / MongoDB), query tuning & optimization.</p>
+            </div>
+            <div class="card">
+              <h3>DevOps</h3>
+              <p>Docker, Jenkins, Git, ELK, CI/CD pipelines and release automation.</p>
+            </div>
+            <div class="card">
+              <h3>Frontend basics</h3>
+              <p>JavaScript, HTML5, CSS3, jQuery, Sass (good collaboration with FE teams).</p>
+            </div>
+            <div class="card">
+              <h3>Bonus</h3>
+              <p>Golang, gRPC, Protocol Buffers, Microservices (growing focus).</p>
+            </div>
+            <div class="card">
+              <h3>Soft skills</h3>
+              <p>Leadership, mentoring, communication, problem-solving.</p>
+            </div>
+          </div>
+        </section>
+
+        <section id="contact" class="section">
+          <div class="section-head">
             <h2>Contact</h2>
-            <div class="contact-info">
-                <h3>Email</h3>
-                <p>abood.elfar@yahoo.com</p>
+            <small>Let’s build something</small>
+          </div>
+
+          <div class="cards">
+            <div class="card">
+              <h3>Email</h3>
+              <p><a href="mailto:abood.elfar@yahoo.com">abood.elfar@yahoo.com</a></p>
             </div>
-            <div class="contact-info">
-                <h3>Phone</h3>
-                <p>+962 79 5732866</p>
+            <div class="card">
+              <h3>Phone</h3>
+              <p><a href="tel:+962795732866">+962 79 5732866</a></p>
             </div>
-            <div class="contact-info">
-                <h3>LinkedIn</h3>
-                <p><a href="https://www.linkedin.com/in/abdullah-alfar-66397686/">View LinkedIn</a></p>
+            <div class="card">
+              <h3>LinkedIn</h3>
+              <p><a href="https://www.linkedin.com/in/abdullah-alfar-66397686/" target="_blank" rel="noopener noreferrer">View Profile</a></p>
             </div>
-        </div>
+            <div class="card">
+              <h3>Location</h3>
+              <p>Amman, Jordan</p>
+            </div>
+          </div>
+        </section>
+      </aside>
     </div>
 
-    <div class="footer">
-        <p>&copy; 2024 John Doe. All rights reserved.</p>
-    </div>
+    <footer>
+      <div>© <span id="year"></span> Abdullah Alfar. All rights reserved.</div>
+      <div style="margin-top:6px;">Built with plain HTML/CSS — fast & GitHub Pages friendly.</div>
+    </footer>
+  </div>
+
+  <script>
+    // Remove no-js marker
+    document.documentElement.classList.remove('no-js');
+
+    // Footer year
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Theme toggle (persist in localStorage)
+    const root = document.documentElement;
+    const btn = document.getElementById('themeBtn');
+
+    function setTheme(theme){
+      root.setAttribute('data-theme', theme);
+      localStorage.setItem('theme', theme);
+      btn.textContent = theme === 'light' ? '🌞 Theme' : '🌙 Theme';
+    }
+
+    const saved = localStorage.getItem('theme');
+    if(saved){
+      setTheme(saved);
+    }else{
+      // default: dark (nice for dev portfolio); switch to light if user prefers
+      const prefersLight = window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches;
+      setTheme(prefersLight ? 'light' : 'dark');
+    }
+
+    btn.addEventListener('click', () => {
+      const current = root.getAttribute('data-theme') || 'dark';
+      setTheme(current === 'dark' ? 'light' : 'dark');
+    });
+  </script>
 </body>
 </html>
